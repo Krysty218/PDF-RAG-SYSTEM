@@ -74,7 +74,7 @@ def create_qa_chain(llm, vectorstore):
 
     qa = RetrievalQA.from_chain_type(
         llm=llm,
-        chain_type="map_reduce",
+        chain_type="stuff",
         retriever=vectorstore.as_retriever(),
         return_source_documents=True,
         chain_type_kwargs={"prompt": PROMPT}
