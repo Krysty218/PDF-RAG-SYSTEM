@@ -1,5 +1,4 @@
 import os
-import tempfile
 import torch
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -7,7 +6,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
-from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline, BitsAndBytesConfig
 from langchain_community.llms import HuggingFacePipeline
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -24,10 +23,9 @@ def load_model():
     
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(
-        model_name,
+        model_name, 
         quantization_config=quantization_config,
-        device_map="auto"
-    )
+        device_map="auto")
     
     text_generation_pipeline = pipeline(
         model=model,
@@ -82,6 +80,7 @@ def create_qa_chain(llm, vectorstore):
     
     return qa
 
+
 if __name__ == "__main__":
     file_path = input("Enter the path to your PDF file: ")
     
@@ -109,5 +108,4 @@ if __name__ == "__main__":
         print("Answer:", result["result"])
         print("\n")
 
-    print("Thank you for using the PDF RAG Query System")
-
+    print("Thank you for using the PDF RAG Query System!")
