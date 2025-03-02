@@ -2,7 +2,7 @@
 A simple rag system to upload pdfs and ask queries
 
 
-# Sample run
+## Sample run
 
 Using device: cuda
 Enter the path to your PDF file: path/harrypotter1.pdf
